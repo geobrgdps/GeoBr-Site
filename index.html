@@ -3,75 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoBR • Oficial GDPS</title>
-    <!-- Fonte Gamer / GD -->
-    <link href="https://fonts.googleapis.com/css2?family=Pusab&family=Russo+One&family=Outfit:wght@600;800&display=swap" rel="stylesheet">
+    <title>GeoBR • Demon List</title>
+    <!-- Fonte Oficial GD / GDBrowser -->
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Outfit:wght@600;800&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --gd-blue: #0066ff;
-            --gd-dark-blue: #0033aa;
-            --gd-box-bg: #a15c32;
-            --gd-box-inner: #8c4c23;
-            --gd-frame-green: #20d030;
-            --gd-frame-cyan: #00e5ff;
+            --gd-bg: #0066ff;
+            --gd-bg-dark: #002277;
+            --gd-box: #a15c32;
+            --gd-box-inner: #4a250e;
+            --gd-card-bg: #633314;
+            --gd-border: #000000;
+            --gd-green: #20d030;
+            --gd-cyan: #00ffff;
             --gd-yellow: #ffe600;
-            --gd-text-stroke: #000;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Russo One', 'Outfit', sans-serif;
+            font-family: 'Russo One', sans-serif;
             user-select: none;
         }
 
         body {
-            background: linear-gradient(180deg, var(--gd-blue) 0%, var(--gd-dark-blue) 100%);
+            background: radial-gradient(circle, var(--gd-bg) 0%, var(--gd-bg-dark) 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 15px;
+            padding: 10px;
             color: #fff;
         }
 
-        /* PAINEL PRINCIPAL ESTILO GD (IN-GAME DIALOG) */
-        .gd-container {
+        /* PAINEL PRINCIPAL ESTILO GDBROWSER */
+        .gdb-container {
             width: 100%;
-            max-width: 850px;
-            background: var(--gd-box-bg);
-            border: 6px solid #000;
+            max-width: 820px;
+            background: var(--gd-box);
+            border: 5px solid var(--gd-border);
             border-radius: 12px;
-            box-shadow: 0 0 0 4px var(--gd-frame-green), 0 0 0 8px #000, 0 10px 25px rgba(0,0,0,0.6);
+            box-shadow: 0 0 0 4px var(--gd-green), 0 0 0 9px var(--gd-border), 0 12px 30px rgba(0,0,0,0.8);
             position: relative;
-            padding: 20px 15px 15px 15px;
-            margin: 20px 0;
+            padding: 18px 12px 12px 12px;
+            margin: 15px 0;
         }
 
-        /* BORDAS DE CIANO NOS CANTOS (DETALHE CLÁSSICO DO GD) */
-        .gd-container::before {
+        /* DETALHE CIANO SUPERIOR */
+        .gdb-container::before {
             content: '';
             position: absolute;
-            top: -10px;
+            top: -9px;
             left: 50%;
             transform: translateX(-50%);
-            width: 40%;
-            height: 12px;
-            background: var(--gd-frame-cyan);
-            border: 3px solid #000;
-            border-radius: 4px;
+            width: 35%;
+            height: 10px;
+            background: var(--gd-cyan);
+            border: 3px solid var(--gd-border);
+            border-radius: 3px;
         }
 
-        /* TÍTULO CLÁSSICO COM CONTORNO */
-        .gd-header {
+        /* TÍTULO COM BORDA PRETA ESTILO GD */
+        .gdb-header {
             text-align: center;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
-        .gd-title {
-            font-size: 2rem;
+        .gdb-title {
+            font-size: 2.1rem;
             color: #fff;
             text-shadow: 
                 -2px -2px 0 #000,  
@@ -83,52 +84,52 @@
             text-transform: uppercase;
         }
 
-        /* MENUS ESTILO BOTÕES GD */
-        .gd-nav {
+        /* BOTÕES DE NAVEGAÇÃO */
+        .gdb-nav {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 8px;
-            margin-bottom: 15px;
+            gap: 6px;
+            margin-bottom: 12px;
         }
 
-        .gd-btn {
-            background: linear-gradient(180deg, #25e038 0%, #17a024 100%);
+        .gdb-btn {
+            background: linear-gradient(180deg, #25e038 0%, #158f20 100%);
             border: 3px solid #000;
-            border-radius: 8px;
+            border-radius: 6px;
             color: #fff;
-            padding: 8px 14px;
-            font-size: 0.9rem;
+            padding: 8px 12px;
+            font-size: 0.85rem;
             cursor: pointer;
             text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-            box-shadow: 0 4px 0 #000;
+            box-shadow: 0 3px 0 #000;
             transition: transform 0.1s;
         }
 
-        .gd-btn:active {
-            transform: translateY(3px);
+        .gdb-btn:active {
+            transform: translateY(2px);
             box-shadow: 0 1px 0 #000;
         }
 
-        .gd-btn.active {
-            background: linear-gradient(180deg, #ffe600 0%, #d4b800 100%);
+        .gdb-btn.active {
+            background: linear-gradient(180deg, #ffe600 0%, #c4ab00 100%);
             color: #000;
             text-shadow: none;
         }
 
-        .gd-btn.discord {
-            background: linear-gradient(180deg, #5865F2 0%, #3b47c4 100%);
+        .gdb-btn.discord {
+            background: linear-gradient(180deg, #5865F2 0%, #3540a8 100%);
             text-decoration: none;
         }
 
-        /* ÁREA INTERNA ESCURA (ONDE FICA O CONTEÚDO) */
-        .gd-inner-box {
+        /* CAIXA MARROM INTERNA */
+        .gdb-inner {
             background: var(--gd-box-inner);
             border: 4px solid #000;
             border-radius: 8px;
-            padding: 15px;
-            min-height: 320px;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+            padding: 12px;
+            min-height: 250px;
+            box-shadow: inset 0 0 12px rgba(0,0,0,0.7);
         }
 
         .content-section {
@@ -139,137 +140,143 @@
             display: block;
         }
 
-        /* LISTA DE NÍVEIS IN-GAME */
-        .list-layout {
+        /* LAYOUT DA LISTA DE FASES */
+        .list-grid {
             display: grid;
-            grid-template-columns: 200px 1fr;
+            grid-template-columns: 240px 1fr;
             gap: 12px;
         }
 
         @media (max-width: 650px) {
-            .list-layout { grid-template-columns: 1fr; }
+            .list-grid { grid-template-columns: 1fr; }
         }
 
-        .level-selector {
+        .level-sidebar {
             display: flex;
             flex-direction: column;
             gap: 6px;
             max-height: 280px;
             overflow-y: auto;
+            padding-right: 4px;
         }
 
-        .level-item {
-            background: #5c2f13;
+        .level-card {
+            background: var(--gd-card-bg);
             border: 2px solid #000;
-            border-radius: 6px;
-            padding: 10px;
+            border-radius: 5px;
+            padding: 8px 10px;
             cursor: pointer;
-            font-size: 0.85rem;
-            box-shadow: 0 2px 0 #000;
-        }
-
-        .level-item.active, .level-item:hover {
-            background: var(--gd-frame-cyan);
-            color: #000;
-        }
-
-        .video-wrapper {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            border: 3px solid #000;
-            border-radius: 6px;
-            overflow: hidden;
-            margin-bottom: 10px;
-        }
-
-        .video-wrapper iframe {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-        }
-
-        .info-bar {
-            background: #5c2f13;
-            border: 2px solid #000;
-            border-radius: 6px;
-            padding: 8px;
-            display: flex;
-            justify-content: space-around;
             font-size: 0.8rem;
+            box-shadow: 0 2px 0 #000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .level-card:hover, .level-card.active {
+            background: var(--gd-cyan);
+            color: #000;
+            font-weight: bold;
+        }
+
+        .info-panel {
+            background: var(--gd-card-bg);
+            border: 3px solid #000;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            font-size: 1rem;
+            box-shadow: 0 3px 0 #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 180px;
+        }
+
+        .info-panel h2 {
+            font-size: 1.6rem;
+            color: var(--gd-yellow);
+            text-shadow: 2px 2px 0 #000;
+            margin-bottom: 12px;
+        }
+
+        .info-panel p {
+            font-size: 1.1rem;
         }
 
         /* MODS & RANKING CARDS */
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 8px;
         }
 
-        .gd-card {
-            background: #5c2f13;
-            border: 3px solid #000;
-            border-radius: 8px;
+        .gdb-card {
+            background: var(--gd-card-bg);
+            border: 2px solid #000;
+            border-radius: 6px;
             padding: 10px;
             text-align: center;
-            box-shadow: 0 3px 0 #000;
+            box-shadow: 0 2px 0 #000;
         }
 
-        .gd-card .badge {
+        .badge {
             display: inline-block;
             background: var(--gd-yellow);
             color: #000;
             padding: 2px 6px;
-            font-size: 0.7rem;
-            border-radius: 4px;
+            font-size: 0.68rem;
+            border-radius: 3px;
             margin-top: 4px;
             border: 1px solid #000;
         }
 
-        /* TUTORIAL BOX */
-        .tutorial-card {
-            background: #5c2f13;
-            border: 3px solid #000;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 10px;
+        .tutorial-item {
+            background: var(--gd-card-bg);
+            border: 2px solid #000;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 8px;
         }
 
-        .url-box {
-            background: #2b1406;
-            border: 2px dashed var(--gd-frame-cyan);
-            color: var(--gd-frame-cyan);
-            padding: 8px;
+        .url-display {
+            background: #1f0d03;
+            border: 2px dashed var(--gd-cyan);
+            color: var(--gd-cyan);
+            padding: 6px;
             border-radius: 4px;
             font-family: monospace;
-            margin-top: 5px;
+            margin-top: 4px;
+            font-size: 0.85rem;
             word-break: break-all;
         }
     </style>
 </head>
 <body>
 
-    <div class="gd-container">
-        <!-- HEADER COM NOME DO GDPS -->
-        <div class="gd-header">
-            <h1 class="gd-title">GeoBR GDPS</h1>
+    <div class="gdb-container">
+        <!-- HEADER -->
+        <div class="gdb-header">
+            <h1 class="gdb-title">GeoBR GDPS</h1>
         </div>
 
-        <!-- BOTÕES DE MUDANÇA DE ABA -->
-        <div class="gd-nav">
-            <button class="gd-btn active" onclick="openTab('listas', this)">Listas</button>
-            <button class="gd-btn" onclick="openTab('mods', this)">Moderadores</button>
-            <button class="gd-btn" onclick="openTab('pontos', this)">Pontos</button>
-            <button class="gd-btn" onclick="openTab('tutorial', this)">Como Entro?</button>
-            <a href="https://discord.gg/sdYx74wG9" target="_blank" class="gd-btn discord">Discord</a>
+        <!-- NAVEGAÇÃO -->
+        <div class="gdb-nav">
+            <button class="gdb-btn active" onclick="openTab('listas', this)">Listas</button>
+            <button class="gdb-btn" onclick="openTab('mods', this)">Moderadores</button>
+            <button class="gdb-btn" onclick="openTab('pontos', this)">Pontos</button>
+            <button class="gdb-btn" onclick="openTab('tutorial', this)">Como Entro?</button>
+            <a href="https://discord.gg/sdYx74wG9" target="_blank" class="gdb-btn discord">Discord</a>
         </div>
 
-        <!-- QUADRO MARROM INTERNO DO GD -->
-        <div class="gd-inner-box">
+        <!-- CONTEÚDO MARROM -->
+        <div class="gdb-inner">
 
-            <!-- ABA 1: LISTAS -->
+            <!-- ABA 1: LISTA DE FASES -->
             <div id="listas" class="content-section active">
-                <div class="list-layout">
-                    <div class="level-selector" id="levelList"></div>
+                <div class="list-grid">
+                    <div class="level-sidebar" id="levelSidebar"></div>
                     <div id="levelDisplay"></div>
                 </div>
             </div>
@@ -278,13 +285,13 @@
             <div id="mods" class="content-section">
                 <h3 style="margin-bottom: 10px; text-align:center;">Equipe da Staff</h3>
                 <div class="cards-grid">
-                    <div class="gd-card"><h4>Luiz</h4><span class="badge">Dono</span></div>
-                    <div class="gd-card"><h4>Ali</h4><span class="badge">Dona</span></div>
-                    <div class="gd-card"><h4>William</h4><span class="badge">Dono</span></div>
-                    <div class="gd-card"><h4>Galaxyer</h4><span class="badge" style="background:var(--gd-frame-cyan)">Elder Mod</span></div>
-                    <div class="gd-card"><h4>TPS</h4><span class="badge" style="background:#fff">Leaderboard Mod</span></div>
-                    <div class="gd-card"><h4>Davi Edits</h4><span class="badge" style="background:#fff">Moderador</span></div>
-                    <div class="gd-card"><h4>Elefitin</h4><span class="badge" style="background:#fff">Chat Mod</span></div>
+                    <div class="gdb-card"><h4>Luiz</h4><span class="badge">Dono</span></div>
+                    <div class="gdb-card"><h4>Ali</h4><span class="badge">Dona</span></div>
+                    <div class="gdb-card"><h4>William</h4><span class="badge">Dono</span></div>
+                    <div class="gdb-card"><h4>Galaxyer</h4><span class="badge" style="background:var(--gd-cyan)">Elder Mod</span></div>
+                    <div class="gdb-card"><h4>TPS</h4><span class="badge" style="background:#fff">Leaderboard Mod</span></div>
+                    <div class="gdb-card"><h4>Davi Edits</h4><span class="badge" style="background:#fff">Moderador</span></div>
+                    <div class="gdb-card"><h4>Elefitin</h4><span class="badge" style="background:#fff">Chat Mod</span></div>
                 </div>
             </div>
 
@@ -294,19 +301,19 @@
                 <div id="rankingList"></div>
             </div>
 
-            <!-- ABA 4: TUTORIAL GEODE -->
+            <!-- ABA 4: COMO ENTRO -->
             <div id="tutorial" class="content-section">
-                <div class="tutorial-card">
+                <div class="tutorial-item">
                     <h4>1. Instale o Geode</h4>
-                    <p style="font-size: 0.85rem;">Instale o cliente do Geode no seu Geometry Dash.</p>
+                    <p style="font-size: 0.8rem;">Instale o cliente do Geode no seu Geometry Dash.</p>
                 </div>
-                <div class="tutorial-card">
+                <div class="tutorial-item">
                     <h4>2. Baixe o Mod "GDPS Switcher"</h4>
-                    <p style="font-size: 0.85rem;">Procure pelo mod GDPS Switcher na loja do Geode.</p>
+                    <p style="font-size: 0.8rem;">Procure pelo mod GDPS Switcher no Geode.</p>
                 </div>
-                <div class="tutorial-card">
+                <div class="tutorial-item">
                     <h4>3. Cole a URL da GeoBR</h4>
-                    <div class="url-box">https://geobr.ps.fhgdps.com/</div>
+                    <div class="url-display">https://geobr.ps.fhgdps.com/</div>
                 </div>
             </div>
 
@@ -316,16 +323,16 @@
     <script>
         const DATA = {
             levels: [
-                {
-                    name: "Nightmare Royal",
-                    author: "Marlon",
-                    verifier: "TerkiMal0n",
-                    id: "445",
-                    yt: "https://youtu.be/bQvuXbs9zsE?is=IezKtdq-X8AfSat1"
-                }
+                { name: "Uon", author: "togtop" },
+                { name: "Rota dos circles", author: "fischbruh" },
+                { name: "Stereo Extremeness", author: "itsd33pGD" },
+                { name: "Royal", author: "marlon" },
+                { name: "Saboorbawamba Prev", author: "kyurem23" },
+                { name: "Sh1try", author: "classicokk" },
+                { name: "Stereo Rageness", author: "izaaaz39" }
             ],
             players: [
-                { name: "TerkiMal0n", points: 10 }
+                { name: "Terkimalon", points: 10 }
             ]
         };
 
@@ -333,7 +340,7 @@
 
         function openTab(tabId, btn) {
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('.gd-btn').forEach(b => {
+            document.querySelectorAll('.gdb-btn').forEach(b => {
                 if(!b.classList.contains('discord')) b.classList.remove('active');
             });
 
@@ -342,15 +349,15 @@
         }
 
         function renderList() {
-            const container = document.getElementById('levelList');
-            container.innerHTML = '';
+            const sidebar = document.getElementById('levelSidebar');
+            sidebar.innerHTML = '';
 
             DATA.levels.forEach((lvl, i) => {
-                const item = document.createElement('div');
-                item.className = `level-item ${i === selectedLvl ? 'active' : ''}`;
-                item.innerHTML = `#${i + 1} ${lvl.name}`;
-                item.onclick = () => { selectedLvl = i; renderList(); renderLvlDetails(); };
-                container.appendChild(item);
+                const card = document.createElement('div');
+                card.className = `level-card ${i === selectedLvl ? 'active' : ''}`;
+                card.innerHTML = `<span>#${i + 1} ${lvl.name}</span><small style="opacity:0.75">by ${lvl.author}</small>`;
+                card.onclick = () => { selectedLvl = i; renderList(); renderLvlDetails(); };
+                sidebar.appendChild(card);
             });
         }
 
@@ -360,22 +367,18 @@
             if(!item) return;
 
             display.innerHTML = `
-                <h3 style="color:var(--gd-yellow); margin-bottom:8px;">#${selectedLvl + 1} - ${item.name}</h3>
-                <div class="video-wrapper">
-                    <iframe src="${item.yt}" allowfullscreen></iframe>
-                </div>
-                <div class="info-bar">
-                    <span>Criador: <strong>${item.author}</strong></span>
-                    <span>ID: <strong>${item.id}</strong></span>
+                <div class="info-panel">
+                    <h2>#${selectedLvl + 1} - ${item.name}</h2>
+                    <p>Criador: <strong style="color:var(--gd-cyan);">${item.author}</strong></p>
                 </div>
             `;
         }
 
         function renderRanking() {
             document.getElementById('rankingList').innerHTML = DATA.players.map((p, i) => `
-                <div class="gd-card" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <div class="gdb-card" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
                     <span>#${i + 1} <strong>${p.name}</strong></span>
-                    <span style="color:var(--gd-yellow); font-weight:bold;">${p.points} PTS</span>
+                    <span style="color:var(--gd-yellow);">${p.points} PTS</span>
                 </div>
             `).join('');
         }
