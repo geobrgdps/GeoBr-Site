@@ -10,7 +10,7 @@
     <style>
         :root {
             --gd-bg: #0066ff;
-            --gd-bg-dark: #002277;
+            --gd-bg-dark: #001a5e;
             --gd-box: #a15c32;
             --gd-box-inner: #4a250e;
             --gd-card-bg: #633314;
@@ -36,6 +36,31 @@
             align-items: center;
             padding: 10px;
             color: #fff;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 🌌 PARTÍCULAS NO FUNDO */
+        .bg-particles {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(0, 255, 255, 0.25);
+            border-radius: 2px;
+            animation: floatUp 7s infinite linear;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(105vh) rotate(0deg); opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
 
         /* PAINEL PRINCIPAL ESTILO GDBROWSER */
@@ -45,10 +70,16 @@
             background: var(--gd-box);
             border: 5px solid var(--gd-border);
             border-radius: 12px;
-            box-shadow: 0 0 0 4px var(--gd-green), 0 0 0 9px var(--gd-border), 0 12px 30px rgba(0,0,0,0.8);
+            box-shadow: 0 0 0 4px var(--gd-green), 0 0 0 9px var(--gd-border), 0 12px 35px rgba(0,0,0,0.85);
             position: relative;
             padding: 18px 12px 12px 12px;
             margin: 15px 0;
+            animation: containerGlow 4s infinite alternate ease-in-out;
+        }
+
+        @keyframes containerGlow {
+            0% { box-shadow: 0 0 0 4px var(--gd-green), 0 0 0 9px var(--gd-border), 0 12px 25px rgba(0,0,0,0.8); }
+            100% { box-shadow: 0 0 0 4px #50ff60, 0 0 0 9px var(--gd-border), 0 12px 35px rgba(0,255,255,0.3); }
         }
 
         /* DETALHE CIANO SUPERIOR */
@@ -63,28 +94,30 @@
             background: var(--gd-cyan);
             border: 3px solid var(--gd-border);
             border-radius: 3px;
+            box-shadow: 0 0 8px var(--gd-cyan);
         }
 
-        /* TÍTULO COM BORDA PRETA ESTILO GD */
+        /* TÍTULO COM SOMBRA ESTILO GD */
         .gdb-header {
             text-align: center;
             margin-bottom: 12px;
         }
 
         .gdb-title {
-            font-size: 2.1rem;
+            font-size: 2.2rem;
             color: #fff;
             text-shadow: 
                 -2px -2px 0 #000,  
                  2px -2px 0 #000,
                 -2px  2px 0 #000,
                  2px  2px 0 #000,
-                 0px  4px 0 #000;
+                 0px  5px 0 #000,
+                 0px  0px 15px rgba(0, 255, 255, 0.6);
             letter-spacing: 2px;
             text-transform: uppercase;
         }
 
-        /* BOTÕES DE NAVEGAÇÃO */
+        /* BOTÕES DE NAVEGAÇÃO INTERATIVOS */
         .gdb-nav {
             display: flex;
             flex-wrap: wrap;
@@ -98,12 +131,18 @@
             border: 3px solid #000;
             border-radius: 6px;
             color: #fff;
-            padding: 8px 12px;
-            font-size: 0.85rem;
+            padding: 8px 14px;
+            font-size: 0.88rem;
             cursor: pointer;
             text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-            box-shadow: 0 3px 0 #000;
-            transition: transform 0.1s;
+            box-shadow: 0 4px 0 #000;
+            transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .gdb-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #000;
+            filter: brightness(1.1);
         }
 
         .gdb-btn:active {
@@ -115,6 +154,7 @@
             background: linear-gradient(180deg, #ffe600 0%, #c4ab00 100%);
             color: #000;
             text-shadow: none;
+            box-shadow: 0 4px 0 #000, 0 0 12px rgba(255, 230, 0, 0.5);
         }
 
         .gdb-btn.discord {
@@ -129,7 +169,7 @@
             border-radius: 8px;
             padding: 12px;
             min-height: 250px;
-            box-shadow: inset 0 0 12px rgba(0,0,0,0.7);
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
         }
 
         .content-section {
@@ -138,6 +178,12 @@
 
         .content-section.active {
             display: block;
+            animation: popIn 0.25s ease-out forwards;
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.96); }
+            100% { opacity: 1; transform: scale(1); }
         }
 
         /* LAYOUT DA LISTA DE FASES */
@@ -171,12 +217,20 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: all 0.15s ease;
         }
 
-        .level-card:hover, .level-card.active {
+        .level-card:hover {
+            transform: translateX(4px);
+            background: #7a3e19;
+        }
+
+        .level-card.active {
             background: var(--gd-cyan);
             color: #000;
             font-weight: bold;
+            transform: translateX(6px);
+            box-shadow: 0 2px 0 #000, 0 0 10px rgba(0, 255, 255, 0.5);
         }
 
         .info-panel {
@@ -205,7 +259,7 @@
             font-size: 1.1rem;
         }
 
-        /* MODS & RANKING CARDS */
+        /* MODS & CARDS */
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -219,6 +273,11 @@
             padding: 10px;
             text-align: center;
             box-shadow: 0 2px 0 #000;
+            transition: transform 0.2s;
+        }
+
+        .gdb-card:hover {
+            transform: translateY(-3px);
         }
 
         .badge {
@@ -250,10 +309,14 @@
             margin-top: 4px;
             font-size: 0.85rem;
             word-break: break-all;
+            text-shadow: 0 0 6px rgba(0, 255, 255, 0.4);
         }
     </style>
 </head>
 <body>
+
+    <!-- PARTÍCULAS EM SEGUNDO PLANO -->
+    <div class="bg-particles" id="particles"></div>
 
     <div class="gdb-container">
         <!-- HEADER -->
@@ -331,9 +394,7 @@
                 { name: "Sh1try", author: "classicokk" },
                 { name: "Stereo Rageness", author: "izaaaz39" }
             ],
-            players: [
-                { name: "Terkimalon", points: 10 }
-            ]
+            players: [] // Terkimalon removido
         };
 
         let selectedLvl = 0;
@@ -375,7 +436,17 @@
         }
 
         function renderRanking() {
-            document.getElementById('rankingList').innerHTML = DATA.players.map((p, i) => `
+            const container = document.getElementById('rankingList');
+            if(DATA.players.length === 0) {
+                container.innerHTML = `
+                    <div class="gdb-card" style="padding: 20px;">
+                        <p style="opacity: 0.8;">Nenhum jogador pontuou no ranking ainda.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = DATA.players.map((p, i) => `
                 <div class="gdb-card" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
                     <span>#${i + 1} <strong>${p.name}</strong></span>
                     <span style="color:var(--gd-yellow);">${p.points} PTS</span>
@@ -383,7 +454,24 @@
             `).join('');
         }
 
+        // GERAR PARTÍCULAS
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for(let i = 0; i < 18; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                const size = Math.random() * 10 + 6 + 'px';
+                particle.style.width = size;
+                particle.style.height = size;
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.animationDelay = Math.random() * 7 + 's';
+                particle.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                container.appendChild(particle);
+            }
+        }
+
         // Boot
+        createParticles();
         renderList();
         renderLvlDetails();
         renderRanking();
