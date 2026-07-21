@@ -4,176 +4,325 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GeoBR • Oficial GDPS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- Fonte Gamer / GD -->
+    <link href="https://fonts.googleapis.com/css2?family=Pusab&family=Russo+One&family=Outfit:wght@600;800&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg-dark: #080a0f;
-            --panel-bg: #111520;
-            --panel-border: #1d2538;
-            --gd-cyan: #00ffff;
-            --gd-lime: #00ff66;
+            --gd-blue: #0066ff;
+            --gd-dark-blue: #0033aa;
+            --gd-box-bg: #a15c32;
+            --gd-box-inner: #8c4c23;
+            --gd-frame-green: #20d030;
+            --gd-frame-cyan: #00e5ff;
             --gd-yellow: #ffe600;
-            --gd-purple: #9d4edd;
-            --discord-color: #5865F2;
-            --text-white: #ffffff;
-            --text-muted: #808a9d;
-            --danger: #ff4757;
+            --gd-text-stroke: #000;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Outfit', sans-serif; }
-        body { background-color: var(--bg-dark); color: var(--text-white); min-height: 100vh; padding: 15px; background-image: radial-gradient(#1a2233 1px, transparent 1px); background-size: 24px 24px; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Russo One', 'Outfit', sans-serif;
+            user-select: none;
+        }
 
-        header { text-align: center; padding: 25px 15px; background: linear-gradient(180deg, #161c2d 0%, #0d111a 100%); border: 2px solid var(--gd-cyan); border-radius: 14px; box-shadow: 0 0 20px rgba(0, 255, 255, 0.25); margin-bottom: 20px; position: relative; }
-        header h1 { font-family: 'Russo One', sans-serif; font-size: 2.5rem; color: var(--gd-cyan); text-shadow: 0 0 12px rgba(0, 255, 255, 0.7); letter-spacing: 2px; }
-        header p { color: var(--text-muted); font-size: 0.95rem; margin-top: 5px; font-weight: 600; }
+        body {
+            background: linear-gradient(180deg, var(--gd-blue) 0%, var(--gd-dark-blue) 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            color: #fff;
+        }
 
-        /* AUTH BOX (LOGIN / REGISTRAR) */
-        .auth-bar { position: absolute; top: 15px; right: 15px; display: flex; gap: 8px; }
-        .auth-btn { background: #1c2233; border: 1px solid var(--gd-cyan); color: var(--gd-cyan); padding: 6px 12px; font-size: 0.8rem; font-weight: 700; border-radius: 6px; cursor: pointer; }
-        .auth-btn:hover { background: var(--gd-cyan); color: #000; }
+        /* PAINEL PRINCIPAL ESTILO GD (IN-GAME DIALOG) */
+        .gd-container {
+            width: 100%;
+            max-width: 850px;
+            background: var(--gd-box-bg);
+            border: 6px solid #000;
+            border-radius: 12px;
+            box-shadow: 0 0 0 4px var(--gd-frame-green), 0 0 0 8px #000, 0 10px 25px rgba(0,0,0,0.6);
+            position: relative;
+            padding: 20px 15px 15px 15px;
+            margin: 20px 0;
+        }
 
-        /* NAVEGAÇÃO */
-        .nav-menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 20px; }
-        .nav-btn { background: #161c2d; border: 2px solid var(--panel-border); color: var(--text-white); padding: 12px 8px; font-family: 'Russo One', sans-serif; font-size: 0.9rem; border-radius: 8px; cursor: pointer; text-transform: uppercase; transition: all 0.2s; text-align: center; }
-        .nav-btn:hover, .nav-btn.active { border-color: var(--gd-cyan); color: var(--gd-cyan); box-shadow: 0 0 12px rgba(0, 255, 255, 0.3); transform: translateY(-2px); }
-        .nav-btn.admin-btn { border-color: var(--gd-yellow); color: var(--gd-yellow); }
-        .nav-btn.discord-btn { border-color: var(--discord-color); color: var(--discord-color); text-decoration: none; display: block; }
+        /* BORDAS DE CIANO NOS CANTOS (DETALHE CLÁSSICO DO GD) */
+        .gd-container::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40%;
+            height: 12px;
+            background: var(--gd-frame-cyan);
+            border: 3px solid #000;
+            border-radius: 4px;
+        }
 
-        /* CONTEÚDO */
-        .content-section { display: none; background: var(--panel-bg); border: 2px solid var(--panel-border); border-radius: 12px; padding: 20px; box-shadow: 0 6px 25px rgba(0, 0, 0, 0.6); }
-        .content-section.active { display: block; }
-        .section-title { font-family: 'Russo One', sans-serif; font-size: 1.4rem; color: var(--gd-yellow); border-bottom: 2px solid var(--panel-border); padding-bottom: 10px; margin-bottom: 18px; text-transform: uppercase; }
+        /* TÍTULO CLÁSSICO COM CONTORNO */
+        .gd-header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
 
-        /* DEMON LIST */
-        .list-grid { display: grid; grid-template-columns: 250px 1fr; gap: 15px; }
-        @media (max-width: 800px) { .list-grid { grid-template-columns: 1fr; } }
-        .name-sidebar { display: flex; flex-direction: column; gap: 8px; max-height: 60vh; overflow-y: auto; }
-        .name-card { background: #181f30; padding: 12px; border-radius: 6px; border-left: 4px solid var(--gd-cyan); cursor: pointer; font-weight: 600; }
-        .name-card:hover, .name-card.active { background: var(--gd-cyan); color: #000; }
+        .gd-title {
+            font-size: 2rem;
+            color: #fff;
+            text-shadow: 
+                -2px -2px 0 #000,  
+                 2px -2px 0 #000,
+                -2px  2px 0 #000,
+                 2px  2px 0 #000,
+                 0px  4px 0 #000;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
 
-        .video-box { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 8px; overflow: hidden; border: 2px solid var(--panel-border); margin: 15px 0; }
-        .video-box iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-        .info-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; background: #181f30; padding: 12px; border-radius: 6px; }
-        .info-cards div span { display: block; font-size: 0.75rem; color: var(--text-muted); }
-        .info-cards div strong { color: var(--gd-lime); font-size: 0.95rem; }
+        /* MENUS ESTILO BOTÕES GD */
+        .gd-nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
 
-        /* MODERADORES */
-        .mod-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; }
-        .mod-card { background: #181f30; border: 1px solid var(--panel-border); padding: 15px; border-radius: 8px; text-align: center; }
-        .mod-card.owner { border-top: 4px solid var(--gd-yellow); }
-        .mod-card.elder { border-top: 4px solid var(--gd-purple); }
-        .mod-card.staff { border-top: 4px solid var(--gd-cyan); }
-        .mod-card h4 { font-family: 'Russo One', sans-serif; font-size: 1.1rem; }
-        .mod-card .role { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; margin-top: 4px; }
+        .gd-btn {
+            background: linear-gradient(180deg, #25e038 0%, #17a024 100%);
+            border: 3px solid #000;
+            border-radius: 8px;
+            color: #fff;
+            padding: 8px 14px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+            box-shadow: 0 4px 0 #000;
+            transition: transform 0.1s;
+        }
 
-        /* PONTOS */
-        .rank-item { display: flex; justify-content: space-between; align-items: center; background: #181f30; padding: 12px 16px; border-radius: 6px; border-right: 4px solid var(--gd-yellow); margin-bottom: 10px; }
-        .rank-pts { color: var(--gd-yellow); font-weight: 800; font-size: 1.1rem; }
+        .gd-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #000;
+        }
 
-        /* PAINEL ADM */
-        .admin-form { display: grid; gap: 12px; background: #181f30; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
-        .admin-form input, .admin-form select { padding: 10px; background: #0d111a; border: 1px solid var(--panel-border); color: #fff; border-radius: 6px; }
-        .btn-submit { background: var(--gd-lime); color: #000; font-weight: 800; padding: 12px; border: none; border-radius: 6px; cursor: pointer; text-transform: uppercase; }
-        .log-box { background: #0d111a; padding: 10px; border-radius: 6px; font-family: monospace; font-size: 0.85rem; color: var(--gd-cyan); max-height: 150px; overflow-y: auto; }
+        .gd-btn.active {
+            background: linear-gradient(180deg, #ffe600 0%, #d4b800 100%);
+            color: #000;
+            text-shadow: none;
+        }
 
-        /* TUTORIAL GEODE */
-        .tutorial-box { background: #181f30; padding: 20px; border-radius: 8px; border-left: 4px solid var(--gd-lime); line-height: 1.6; }
-        .url-copy { background: #0d111a; border: 1px dashed var(--gd-cyan); color: var(--gd-cyan); padding: 10px; border-radius: 6px; font-family: monospace; font-size: 1rem; margin: 10px 0; }
+        .gd-btn.discord {
+            background: linear-gradient(180deg, #5865F2 0%, #3b47c4 100%);
+            text-decoration: none;
+        }
+
+        /* ÁREA INTERNA ESCURA (ONDE FICA O CONTEÚDO) */
+        .gd-inner-box {
+            background: var(--gd-box-inner);
+            border: 4px solid #000;
+            border-radius: 8px;
+            padding: 15px;
+            min-height: 320px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        /* LISTA DE NÍVEIS IN-GAME */
+        .list-layout {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 12px;
+        }
+
+        @media (max-width: 650px) {
+            .list-layout { grid-template-columns: 1fr; }
+        }
+
+        .level-selector {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            max-height: 280px;
+            overflow-y: auto;
+        }
+
+        .level-item {
+            background: #5c2f13;
+            border: 2px solid #000;
+            border-radius: 6px;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            box-shadow: 0 2px 0 #000;
+        }
+
+        .level-item.active, .level-item:hover {
+            background: var(--gd-frame-cyan);
+            color: #000;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            border: 3px solid #000;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+        }
+
+        .info-bar {
+            background: #5c2f13;
+            border: 2px solid #000;
+            border-radius: 6px;
+            padding: 8px;
+            display: flex;
+            justify-content: space-around;
+            font-size: 0.8rem;
+        }
+
+        /* MODS & RANKING CARDS */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+
+        .gd-card {
+            background: #5c2f13;
+            border: 3px solid #000;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0 3px 0 #000;
+        }
+
+        .gd-card .badge {
+            display: inline-block;
+            background: var(--gd-yellow);
+            color: #000;
+            padding: 2px 6px;
+            font-size: 0.7rem;
+            border-radius: 4px;
+            margin-top: 4px;
+            border: 1px solid #000;
+        }
+
+        /* TUTORIAL BOX */
+        .tutorial-card {
+            background: #5c2f13;
+            border: 3px solid #000;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .url-box {
+            background: #2b1406;
+            border: 2px dashed var(--gd-frame-cyan);
+            color: var(--gd-frame-cyan);
+            padding: 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            margin-top: 5px;
+            word-break: break-all;
+        }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="auth-bar">
-            <button class="auth-btn" onclick="openAuthModal('Login')">Logar</button>
-            <button class="auth-btn" onclick="openAuthModal('Registrar')">Registrar</button>
+    <div class="gd-container">
+        <!-- HEADER COM NOME DO GDPS -->
+        <div class="gd-header">
+            <h1 class="gd-title">GeoBR GDPS</h1>
         </div>
-        <h1>GeoBR GDPS</h1>
-        <p>Servidor Privado Oficial de Geometry Dash</p>
-    </header>
 
-    <nav class="nav-menu">
-        <button class="nav-btn active" onclick="openTab('listas', this)">Listas</button>
-        <button class="nav-btn" onclick="openTab('mods', this)">Moderadores</button>
-        <button class="nav-btn" onclick="openTab('pontos', this)">Pontos</button>
-        <button class="nav-btn" onclick="openTab('tutorial', this)">Como Entro?</button>
-        <button class="nav-btn admin-btn" onclick="openTab('admin', this)">Painel ADM ⚙️</button>
-        <a href="https://discord.gg/sdYx74wG9" target="_blank" class="nav-btn discord-btn">Discord 💬</a>
-    </nav>
-
-    <!-- ABA 1: LISTAS -->
-    <section id="listas" class="content-section active">
-        <div class="section-title">🏆 Demon List Oficial</div>
-        <div class="list-grid">
-            <div class="name-sidebar" id="nameSidebar"></div>
-            <div id="levelDisplay"></div>
+        <!-- BOTÕES DE MUDANÇA DE ABA -->
+        <div class="gd-nav">
+            <button class="gd-btn active" onclick="openTab('listas', this)">Listas</button>
+            <button class="gd-btn" onclick="openTab('mods', this)">Moderadores</button>
+            <button class="gd-btn" onclick="openTab('pontos', this)">Pontos</button>
+            <button class="gd-btn" onclick="openTab('tutorial', this)">Como Entro?</button>
+            <a href="https://discord.gg/sdYx74wG9" target="_blank" class="gd-btn discord">Discord</a>
         </div>
-    </section>
 
-    <!-- ABA 2: MODERADORES -->
-    <section id="mods" class="content-section">
-        <div class="section-title">🛡️ Equipe da Staff</div>
-        <div class="mod-grid">
-            <div class="mod-card owner"><h4>Luiz</h4><div class="role" style="color:var(--gd-yellow)">Dono</div></div>
-            <div class="mod-card owner"><h4>Ali</h4><div class="role" style="color:var(--gd-yellow)">Dona</div></div>
-            <div class="mod-card owner"><h4>William</h4><div class="role" style="color:var(--gd-yellow)">Dono</div></div>
-            <div class="mod-card elder"><h4>Galaxyer</h4><div class="role" style="color:var(--gd-purple)">Elder Mod</div></div>
-            <div class="mod-card staff"><h4>TPS</h4><div class="role" style="color:var(--gd-cyan)">Leaderboard Mod</div></div>
-            <div class="mod-card staff"><h4>Davi Edits</h4><div class="role" style="color:var(--gd-cyan)">Moderador</div></div>
-            <div class="mod-card staff"><h4>Elefitin</h4><div class="role" style="color:var(--gd-cyan)">Chat Mod</div></div>
+        <!-- QUADRO MARROM INTERNO DO GD -->
+        <div class="gd-inner-box">
+
+            <!-- ABA 1: LISTAS -->
+            <div id="listas" class="content-section active">
+                <div class="list-layout">
+                    <div class="level-selector" id="levelList"></div>
+                    <div id="levelDisplay"></div>
+                </div>
+            </div>
+
+            <!-- ABA 2: MODERADORES -->
+            <div id="mods" class="content-section">
+                <h3 style="margin-bottom: 10px; text-align:center;">Equipe da Staff</h3>
+                <div class="cards-grid">
+                    <div class="gd-card"><h4>Luiz</h4><span class="badge">Dono</span></div>
+                    <div class="gd-card"><h4>Ali</h4><span class="badge">Dona</span></div>
+                    <div class="gd-card"><h4>William</h4><span class="badge">Dono</span></div>
+                    <div class="gd-card"><h4>Galaxyer</h4><span class="badge" style="background:var(--gd-frame-cyan)">Elder Mod</span></div>
+                    <div class="gd-card"><h4>TPS</h4><span class="badge" style="background:#fff">Leaderboard Mod</span></div>
+                    <div class="gd-card"><h4>Davi Edits</h4><span class="badge" style="background:#fff">Moderador</span></div>
+                    <div class="gd-card"><h4>Elefitin</h4><span class="badge" style="background:#fff">Chat Mod</span></div>
+                </div>
+            </div>
+
+            <!-- ABA 3: PONTOS -->
+            <div id="pontos" class="content-section">
+                <h3 style="margin-bottom: 10px; text-align:center;">Placar de Jogadores</h3>
+                <div id="rankingList"></div>
+            </div>
+
+            <!-- ABA 4: TUTORIAL GEODE -->
+            <div id="tutorial" class="content-section">
+                <div class="tutorial-card">
+                    <h4>1. Instale o Geode</h4>
+                    <p style="font-size: 0.85rem;">Instale o cliente do Geode no seu Geometry Dash.</p>
+                </div>
+                <div class="tutorial-card">
+                    <h4>2. Baixe o Mod "GDPS Switcher"</h4>
+                    <p style="font-size: 0.85rem;">Procure pelo mod GDPS Switcher na loja do Geode.</p>
+                </div>
+                <div class="tutorial-card">
+                    <h4>3. Cole a URL da GeoBR</h4>
+                    <div class="url-box">https://geobr.ps.fhgdps.com/</div>
+                </div>
+            </div>
+
         </div>
-    </section>
-
-    <!-- ABA 3: PONTOS -->
-    <section id="pontos" class="content-section">
-        <div class="section-title">🥇 Placar de Jogadores</div>
-        <div class="ranking-list" id="rankingList"></div>
-    </section>
-
-    <!-- ABA 4: TUTORIAL GEODE -->
-    <section id="tutorial" class="content-section">
-        <div class="section-title">🎮 Como Entrar no GeoBR (Geode Mod)</div>
-        <div class="tutorial-box">
-            <h4>1. Instale o Geode</h4>
-            <p>Baixe e instale o <strong>Geode</strong> no seu Geometry Dash (Android ou PC).</p>
-            <br>
-            <h4>2. Baixe o Mod "GDPS Switcher"</h4>
-            <p>Abra a aba de Mods dentro do Geode, pesquise por <strong>GDPS Switcher</strong> e clique em instalar.</p>
-            <br>
-            <h4>3. Adicione o Servidor GeoBR</h4>
-            <p>Abra as configurações do GDPS Switcher e cole a nossa URL:</p>
-            <div class="url-copy">https://geobr.ps.fhgdps.com/</div>
-            <p>Ative o servidor e divirta-se jogando no GeoBR!</p>
-        </div>
-    </section>
-
-    <!-- ABA 5: PAINEL ADM -->
-    <section id="admin" class="content-section">
-        <div class="section-title">⚙️ Gerenciador de ADM</div>
-        
-        <form class="admin-form" onsubmit="addLevel(event)">
-            <h4>➕ Adicionar Novo Nível na Lista</h4>
-            <input type="text" id="admName" placeholder="Nome do Level" required>
-            <input type="text" id="admAuthor" placeholder="Autor / Criador" required>
-            <input type="text" id="admVerifier" placeholder="Verificador" required>
-            <input type="text" id="admId" placeholder="ID da Fase no GD" required>
-            <input type="text" id="admYt" placeholder="Link do Vídeo (Embed do YouTube)" required>
-            <button type="submit" class="btn-submit">Adicionar Nível</button>
-        </form>
-
-        <h4>📜 Logs da Staff (Atividades Recentes)</h4>
-        <div class="log-box" id="logBox">
-            [SISTEMA]: Painel iniciado com sucesso.<br>
-            [LOG]: Terkimalon definido com 10 Pontos.<br>
-        </div>
-    </section>
+    </div>
 
     <script>
-        // DADOS PADRÃO
         const DATA = {
             levels: [
-                { name: "Nightmare Royal", author: "GeoBR Staff", verifier: "Terkimalon", id: "884920", yt: "https://www.youtube.com/embed/dQw4w9WgXcQ" }
+                {
+                    name: "Nightmare Royal",
+                    author: "GeoBR Staff",
+                    verifier: "Terkimalon",
+                    id: "884920",
+                    yt: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+                }
             ],
             players: [
                 { name: "Terkimalon", points: 10 }
@@ -184,20 +333,24 @@
 
         function openTab(tabId, btn) {
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => { if(!b.classList.contains('discord-btn')) b.classList.remove('active'); });
+            document.querySelectorAll('.gd-btn').forEach(b => {
+                if(!b.classList.contains('discord')) b.classList.remove('active');
+            });
+
             document.getElementById(tabId).classList.add('active');
             if(btn) btn.classList.add('active');
         }
 
         function renderList() {
-            const sidebar = document.getElementById('nameSidebar');
-            sidebar.innerHTML = '';
+            const container = document.getElementById('levelList');
+            container.innerHTML = '';
+
             DATA.levels.forEach((lvl, i) => {
-                const card = document.createElement('div');
-                card.className = `name-card ${i === selectedLvl ? 'active' : ''}`;
-                card.innerHTML = `#${i + 1} ${lvl.name}`;
-                card.onclick = () => { selectedLvl = i; renderList(); renderLvlDetails(); };
-                sidebar.appendChild(card);
+                const item = document.createElement('div');
+                item.className = `level-item ${i === selectedLvl ? 'active' : ''}`;
+                item.innerHTML = `#${i + 1} ${lvl.name}`;
+                item.onclick = () => { selectedLvl = i; renderList(); renderLvlDetails(); };
+                container.appendChild(item);
             });
         }
 
@@ -207,45 +360,24 @@
             if(!item) return;
 
             display.innerHTML = `
-                <h2 style="font-family:'Russo One'; color:var(--gd-yellow); font-size:1.6rem;">#${selectedLvl + 1} - ${item.name}</h2>
-                <div class="video-box"><iframe src="${item.yt}" allowfullscreen></iframe></div>
-                <div class="info-cards">
-                    <div><span>AUTOR</span><strong>${item.author}</strong></div>
-                    <div><span>VERIFICADOR</span><strong>${item.verifier}</strong></div>
-                    <div><span>ID</span><strong>${item.id}</strong></div>
+                <h3 style="color:var(--gd-yellow); margin-bottom:8px;">#${selectedLvl + 1} - ${item.name}</h3>
+                <div class="video-wrapper">
+                    <iframe src="${item.yt}" allowfullscreen></iframe>
+                </div>
+                <div class="info-bar">
+                    <span>Criador: <strong>${item.author}</strong></span>
+                    <span>ID: <strong>${item.id}</strong></span>
                 </div>
             `;
         }
 
         function renderRanking() {
             document.getElementById('rankingList').innerHTML = DATA.players.map((p, i) => `
-                <div class="rank-item">
-                    <span><strong>#${i + 1}</strong> ${p.name}</span>
-                    <span class="rank-pts">${p.points} PTS</span>
+                <div class="gd-card" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                    <span>#${i + 1} <strong>${p.name}</strong></span>
+                    <span style="color:var(--gd-yellow); font-weight:bold;">${p.points} PTS</span>
                 </div>
             `).join('');
-        }
-
-        function addLevel(e) {
-            e.preventDefault();
-            const name = document.getElementById('admName').value;
-            const author = document.getElementById('admAuthor').value;
-            const verifier = document.getElementById('admVerifier').value;
-            const id = document.getElementById('admId').value;
-            const yt = document.getElementById('admYt').value;
-
-            DATA.levels.push({ name, author, verifier, id, yt });
-            renderList();
-            
-            // Adicionar Log
-            const logBox = document.getElementById('logBox');
-            logBox.innerHTML += `[LOG ADM]: Fase "${name}" adicionada por Luiz.<br>`;
-            alert('Nível adicionado com sucesso!');
-        }
-
-        function openAuthModal(type) {
-            const user = prompt(`Digite seu apelido para ${type}:`);
-            if(user) alert(`${type} realizado com sucesso para ${user}!`);
         }
 
         // Boot
