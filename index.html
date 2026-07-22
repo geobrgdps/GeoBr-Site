@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GeoBR • Demon List</title>
-    <!-- Fonte Oficial GD / GDBrowser -->
     <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Outfit:wght@600;800&display=swap" rel="stylesheet">
     
     <style>
@@ -63,10 +62,10 @@
             100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
 
-        /* PAINEL PRINCIPAL ESTILO GDBROWSER */
+        /* PAINEL PRINCIPAL */
         .gdb-container {
             width: 100%;
-            max-width: 820px;
+            max-width: 860px;
             background: var(--gd-box);
             border: 5px solid var(--gd-border);
             border-radius: 12px;
@@ -82,7 +81,6 @@
             100% { box-shadow: 0 0 0 4px #50ff60, 0 0 0 9px var(--gd-border), 0 12px 35px rgba(0,255,255,0.3); }
         }
 
-        /* DETALHE CIANO SUPERIOR */
         .gdb-container::before {
             content: '';
             position: absolute;
@@ -97,7 +95,6 @@
             box-shadow: 0 0 8px var(--gd-cyan);
         }
 
-        /* TÍTULO COM SOMBRA ESTILO GD */
         .gdb-header {
             text-align: center;
             margin-bottom: 12px;
@@ -117,7 +114,7 @@
             text-transform: uppercase;
         }
 
-        /* BOTÕES DE NAVEGAÇÃO INTERATIVOS */
+        /* BOTÕES DE NAVEGAÇÃO */
         .gdb-nav {
             display: flex;
             flex-wrap: wrap;
@@ -131,12 +128,12 @@
             border: 3px solid #000;
             border-radius: 6px;
             color: #fff;
-            padding: 8px 14px;
-            font-size: 0.88rem;
+            padding: 8px 12px;
+            font-size: 0.85rem;
             cursor: pointer;
             text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
             box-shadow: 0 4px 0 #000;
-            transition: all 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.15s ease;
         }
 
         .gdb-btn:hover {
@@ -162,13 +159,13 @@
             text-decoration: none;
         }
 
-        /* CAIXA MARROM INTERNA */
+        /* CAIXA INTERNA */
         .gdb-inner {
             background: var(--gd-box-inner);
             border: 4px solid #000;
             border-radius: 8px;
             padding: 12px;
-            min-height: 250px;
+            min-height: 280px;
             box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
         }
 
@@ -186,7 +183,25 @@
             100% { opacity: 1; transform: scale(1); }
         }
 
-        /* LAYOUT DA LISTA DE FASES */
+        /* SISTEMA DE BUSCA */
+        .search-box {
+            width: 100%;
+            padding: 8px 12px;
+            margin-bottom: 10px;
+            background: #1f0d03;
+            border: 2px solid #000;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 0.85rem;
+            outline: none;
+        }
+
+        .search-box:focus {
+            border-color: var(--gd-cyan);
+            box-shadow: 0 0 8px var(--gd-cyan);
+        }
+
+        /* LAYOUT DA LISTA */
         .list-grid {
             display: grid;
             grid-template-columns: 240px 1fr;
@@ -201,7 +216,7 @@
             display: flex;
             flex-direction: column;
             gap: 6px;
-            max-height: 280px;
+            max-height: 320px;
             overflow-y: auto;
             padding-right: 4px;
         }
@@ -233,36 +248,55 @@
             box-shadow: 0 2px 0 #000, 0 0 10px rgba(0, 255, 255, 0.5);
         }
 
+        /* PAINEL DE DETALHES DO LEVEL */
         .info-panel {
             background: var(--gd-card-bg);
             border: 3px solid #000;
             border-radius: 8px;
-            padding: 20px;
+            padding: 16px;
             text-align: center;
-            font-size: 1rem;
             box-shadow: 0 3px 0 #000;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 180px;
+            gap: 10px;
+            min-height: 240px;
         }
 
         .info-panel h2 {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             color: var(--gd-yellow);
             text-shadow: 2px 2px 0 #000;
-            margin-bottom: 12px;
         }
 
-        .info-panel p {
-            font-size: 1.1rem;
+        .level-thumb-box {
+            width: 100%;
+            height: 110px;
+            background: #110601;
+            border: 2px solid #000;
+            border-radius: 6px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #888;
+            font-size: 0.8rem;
+            background-size: cover;
+            background-position: center;
         }
 
-        /* MODS & CARDS */
+        .stats-row {
+            display: flex;
+            justify-content: space-around;
+            background: #1f0d03;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #000;
+            font-size: 0.85rem;
+        }
+
+        /* CARDS E TUTORIAL */
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
             gap: 8px;
         }
 
@@ -273,11 +307,6 @@
             padding: 10px;
             text-align: center;
             box-shadow: 0 2px 0 #000;
-            transition: transform 0.2s;
-        }
-
-        .gdb-card:hover {
-            transform: translateY(-3px);
         }
 
         .badge {
@@ -291,31 +320,24 @@
             border: 1px solid #000;
         }
 
-        .tutorial-item {
+        .changelog-item {
             background: var(--gd-card-bg);
             border: 2px solid #000;
-            padding: 10px;
             border-radius: 6px;
+            padding: 10px;
             margin-bottom: 8px;
+            font-size: 0.85rem;
         }
 
-        .url-display {
-            background: #1f0d03;
-            border: 2px dashed var(--gd-cyan);
+        .changelog-date {
             color: var(--gd-cyan);
-            padding: 6px;
-            border-radius: 4px;
-            font-family: monospace;
-            margin-top: 4px;
-            font-size: 0.85rem;
-            word-break: break-all;
-            text-shadow: 0 0 6px rgba(0, 255, 255, 0.4);
+            font-size: 0.75rem;
+            margin-bottom: 4px;
         }
     </style>
 </head>
 <body>
 
-    <!-- PARTÍCULAS EM SEGUNDO PLANO -->
     <div class="bg-particles" id="particles"></div>
 
     <div class="gdb-container">
@@ -327,24 +349,38 @@
         <!-- NAVEGAÇÃO -->
         <div class="gdb-nav">
             <button class="gdb-btn active" onclick="openTab('listas', this)">Listas</button>
-            <button class="gdb-btn" onclick="openTab('mods', this)">Moderadores</button>
+            <button class="gdb-btn" onclick="openTab('changelog', this)">Changelog</button>
+            <button class="gdb-btn" onclick="openTab('mods', this)">Staff</button>
             <button class="gdb-btn" onclick="openTab('pontos', this)">Pontos</button>
-            <button class="gdb-btn" onclick="openTab('tutorial', this)">Como Entro?</button>
+            <button class="gdb-btn" onclick="openTab('tutorial', this)">Como Entrar</button>
             <a href="https://discord.gg/sdYx74wG9" target="_blank" class="gdb-btn discord">Discord</a>
         </div>
 
-        <!-- CONTEÚDO MARROM -->
         <div class="gdb-inner">
 
             <!-- ABA 1: LISTA DE FASES -->
             <div id="listas" class="content-section active">
+                <input type="text" id="searchInput" class="search-box" placeholder="🔍 Pesquisar fase ou criador..." oninput="filterLevels()">
                 <div class="list-grid">
                     <div class="level-sidebar" id="levelSidebar"></div>
                     <div id="levelDisplay"></div>
                 </div>
             </div>
 
-            <!-- ABA 2: MODERADORES -->
+            <!-- ABA 2: CHANGELOG -->
+            <div id="changelog" class="content-section">
+                <h3 style="margin-bottom: 10px; text-align:center;">Histórico de Mudanças</h3>
+                <div class="changelog-item">
+                    <div class="changelog-date">22/07/2026</div>
+                    <p>• Redesign no site com animações e sistema de busca.<br>• Adicionado aba de Changelog.<br>• Detalhes e thumbnails para cada level.</p>
+                </div>
+                <div class="changelog-item">
+                    <div class="changelog-date">20/07/2026</div>
+                    <p>• Lançamento inicial da Demon List do GeoBR GDPS.</p>
+                </div>
+            </div>
+
+            <!-- ABA 3: MODERADORES -->
             <div id="mods" class="content-section">
                 <h3 style="margin-bottom: 10px; text-align:center;">Equipe da Staff</h3>
                 <div class="cards-grid">
@@ -358,25 +394,25 @@
                 </div>
             </div>
 
-            <!-- ABA 3: PONTOS -->
+            <!-- ABA 4: PONTOS -->
             <div id="pontos" class="content-section">
                 <h3 style="margin-bottom: 10px; text-align:center;">Placar de Jogadores</h3>
                 <div id="rankingList"></div>
             </div>
 
-            <!-- ABA 4: COMO ENTRO -->
+            <!-- ABA 5: TUTORIAL -->
             <div id="tutorial" class="content-section">
-                <div class="tutorial-item">
+                <div class="changelog-item">
                     <h4>1. Instale o Geode</h4>
-                    <p style="font-size: 0.8rem;">Instale o cliente do Geode no seu Geometry Dash.</p>
+                    <p style="font-size: 0.8rem; margin-top:4px;">Instale o cliente do Geode no seu Geometry Dash.</p>
                 </div>
-                <div class="tutorial-item">
+                <div class="changelog-item">
                     <h4>2. Baixe o Mod "GDPS Switcher"</h4>
-                    <p style="font-size: 0.8rem;">Procure pelo mod GDPS Switcher no Geode.</p>
+                    <p style="font-size: 0.8rem; margin-top:4px;">Procure pelo mod GDPS Switcher no Geode.</p>
                 </div>
-                <div class="tutorial-item">
+                <div class="changelog-item">
                     <h4>3. Cole a URL da GeoBR</h4>
-                    <div class="url-display">https://geobr.ps.fhgdps.com/</div>
+                    <p style="color:var(--gd-cyan); font-family:monospace; margin-top:4px;">https://geobr.ps.fhgdps.com/</p>
                 </div>
             </div>
 
@@ -386,18 +422,19 @@
     <script>
         const DATA = {
             levels: [
-                { name: "Uon", author: "togtop" },
-                { name: "Rota dos circles", author: "fischbruh" },
-                { name: "Stereo Extremeness", author: "itsd33pGD" },
-                { name: "Royal", author: "marlon" },
-                { name: "Saboorbawamba Prev", author: "kyurem23" },
-                { name: "Sh1try", author: "classicokk" },
-                { name: "Stereo Rageness", author: "izaaaz39" }
+                { name: "Uon", author: "togtop", verifier: "togtop", id: "---", thumb: "" },
+                { name: "Rota dos circles", author: "fischbruh", verifier: "fischbruh", id: "---", thumb: "" },
+                { name: "Stereo Extremeness", author: "itsd33pGD", verifier: "itsd33pGD", id: "---", thumb: "" },
+                { name: "Royal", author: "marlon", verifier: "marlon", id: "---", thumb: "" },
+                { name: "Saboorbawamba Prev", author: "kyurem23", verifier: "kyurem23", id: "---", thumb: "" },
+                { name: "Sh1try", author: "classicokk", verifier: "classicokk", id: "---", thumb: "" },
+                { name: "Stereo Rageness", author: "izaaaz39", verifier: "izaaaz39", id: "---", thumb: "" }
             ],
-            players: [] // Terkimalon removido
+            players: []
         };
 
         let selectedLvl = 0;
+        let filteredLevels = [...DATA.levels];
 
         function openTab(tabId, btn) {
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
@@ -409,14 +446,25 @@
             if(btn) btn.classList.add('active');
         }
 
+        function filterLevels() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            filteredLevels = DATA.levels.filter(l => 
+                l.name.toLowerCase().includes(query) || l.author.toLowerCase().includes(query)
+            );
+            selectedLvl = 0;
+            renderList();
+            renderLvlDetails();
+        }
+
         function renderList() {
             const sidebar = document.getElementById('levelSidebar');
             sidebar.innerHTML = '';
 
-            DATA.levels.forEach((lvl, i) => {
+            filteredLevels.forEach((lvl, i) => {
+                const originalIndex = DATA.levels.indexOf(lvl);
                 const card = document.createElement('div');
                 card.className = `level-card ${i === selectedLvl ? 'active' : ''}`;
-                card.innerHTML = `<span>#${i + 1} ${lvl.name}</span><small style="opacity:0.75">by ${lvl.author}</small>`;
+                card.innerHTML = `<span>#${originalIndex + 1} ${lvl.name}</span><small style="opacity:0.75">by ${lvl.author}</small>`;
                 card.onclick = () => { selectedLvl = i; renderList(); renderLvlDetails(); };
                 sidebar.appendChild(card);
             });
@@ -424,13 +472,24 @@
 
         function renderLvlDetails() {
             const display = document.getElementById('levelDisplay');
-            const item = DATA.levels[selectedLvl];
-            if(!item) return;
+            const item = filteredLevels[selectedLvl];
+            if(!item) {
+                display.innerHTML = '<div class="info-panel"><p>Nenhuma fase encontrada.</p></div>';
+                return;
+            }
+
+            const originalIndex = DATA.levels.indexOf(item);
 
             display.innerHTML = `
                 <div class="info-panel">
-                    <h2>#${selectedLvl + 1} - ${item.name}</h2>
-                    <p>Criador: <strong style="color:var(--gd-cyan);">${item.author}</strong></p>
+                    <h2>#${originalIndex + 1} - ${item.name}</h2>
+                    <div class="level-thumb-box" ${item.thumb ? `style="background-image:url('${item.thumb}')"` : ''}>
+                        ${item.thumb ? '' : '📷 Sem Thumbnail Registrada'}
+                    </div>
+                    <div class="stats-row">
+                        <span>Criador: <strong style="color:var(--gd-cyan);">${item.author}</strong></span>
+                        <span>Verificador: <strong style="color:var(--gd-yellow);">${item.verifier}</strong></span>
+                    </div>
                 </div>
             `;
         }
@@ -445,16 +504,8 @@
                 `;
                 return;
             }
-
-            container.innerHTML = DATA.players.map((p, i) => `
-                <div class="gdb-card" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                    <span>#${i + 1} <strong>${p.name}</strong></span>
-                    <span style="color:var(--gd-yellow);">${p.points} PTS</span>
-                </div>
-            `).join('');
         }
 
-        // GERAR PARTÍCULAS
         function createParticles() {
             const container = document.getElementById('particles');
             for(let i = 0; i < 18; i++) {
@@ -470,7 +521,6 @@
             }
         }
 
-        // Boot
         createParticles();
         renderList();
         renderLvlDetails();
