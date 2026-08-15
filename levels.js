@@ -1,4 +1,4 @@
-const LEVELS = [
+window.LEVELS = [
   { position: 1, name: "Silent uon", creator: "", id: null, verifier: "", difficulty: "Extreme Demon", video: "", status: "Published" },
   { position: 2, name: "abandoned", creator: "", id: null, verifier: "", difficulty: "Extreme Demon", video: "", status: "Published" },
   { position: 3, name: "silent Infernal", creator: "", id: null, verifier: "", difficulty: "Extreme Demon", video: "", status: "Published" },
