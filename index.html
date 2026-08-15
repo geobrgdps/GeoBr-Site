@@ -3,17 +3,35 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="GeoBR Demon List — ranking de demons da comunidade GeoBR.">
 <title>GeoBR Demon List</title>
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css?v=3">
 </head>
 <body>
-<header class="top"><a href="index.html" class="logo"><span>G</span> GeoBR <b>Demon List</b></a><nav><a class="active" href="index.html">List</a><a href="about.html">About</a></nav></header>
-<main class="wrap">
-<section class="intro"><div><small>GEOBR</small><h1>Demon List</h1><p>O ranking dos demons mais difíceis da comunidade brasileira.</p></div><div class="stats"><strong id="count">0</strong><span>demons</span></div></section>
-<div class="tools"><input id="search" placeholder="Pesquisar level ou criador..." autocomplete="off"><select id="filter"><option value="all">Todas as dificuldades</option><option>Extreme Demon</option><option>Insane Demon</option><option>Hard Demon</option><option>Medium Demon</option><option>Easy Demon</option></select></div>
-<section id="list"></section><p id="empty" class="empty" hidden>Nenhum level encontrado.</p>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="index.html"><strong>GeoBR</strong><span>Demon List</span></a>
+    <nav><a class="active" href="index.html">Demon List</a></nav>
+  </div>
+</header>
+<main class="page">
+  <section class="list-head">
+    <div>
+      <h1>GeoBR Demon List</h1>
+      <p>A lista dos demons mais difíceis da comunidade GeoBR.</p>
+    </div>
+    <div class="list-count"><b id="count">0</b><span>demons</span></div>
+  </section>
+
+  <section class="list-section">
+    <div class="section-title"><div><h2>Main List</h2><p>Os demons atualmente classificados na lista.</p></div></div>
+    <div class="filter"><input id="search" type="search" placeholder="Filter..." autocomplete="off"></div>
+    <div id="list" class="rank-list"></div>
+    <p id="empty" class="empty" hidden>Nenhum level encontrado.</p>
+  </section>
 </main>
-<footer>GeoBR Demon List V1</footer>
-<script src="levels.js"></script><script src="app.js"></script>
+<footer>GeoBR Demon List · V1</footer>
+<script src="levels.js?v=3"></script>
+<script src="app.js?v=3"></script>
 </body>
 </html>
