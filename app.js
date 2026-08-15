@@ -11,7 +11,12 @@ function escapeHtml(value) {
 }
 
 function render() {
-  const levels = Array.isArray(window.LEVELS) ? window.LEVELS : [];
+  // levels.js declares `const LEVELS`, which is not a window property.
+  // Support both that form and a future window.LEVELS data source.
+  const levels = Array.isArray(window.LEVELS)
+    ? window.LEVELS
+    : (typeof LEVELS !== 'undefined' && Array.isArray(LEVELS) ? LEVELS : []);
+
   const query = (search.value || '').trim().toLowerCase();
   const items = levels
     .filter(function (level) {
@@ -27,15 +32,19 @@ function render() {
 
   count.textContent = String(levels.length);
   empty.hidden = items.length !== 0;
+
   list.innerHTML = items.map(function (level) {
     const creator = level.creator ? 'by ' + escapeHtml(level.creator) : 'Creator not set';
     const difficulty = level.difficulty || 'Demon';
+
     return '<article class="level">' +
       '<div class="rank">#' + escapeHtml(level.position) + '</div>' +
-      '<div><div class="name">' + escapeHtml(level.name) + '</div>' +
-      '<div class="creator">' + creator + '</div></div>' +
+      '<div>' +
+        '<div class="name">' + escapeHtml(level.name) + '</div>' +
+        '<div class="creator">' + creator + '</div>' +
+      '</div>' +
       '<div class="meta"><span class="difficulty">' + escapeHtml(difficulty) + '</span></div>' +
-      '</article>';
+    '</article>';
   }).join('');
 }
 
