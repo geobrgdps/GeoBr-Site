@@ -1,4 +1,24 @@
 const LEVELS = [
-  // Configure the GeoBR List here.
-  // { position: 1, name: "Level Name", creator: "Creator", id: 123456, verifier: "Verifier", difficulty: "Extreme Demon", video: "https://...", status: "Published" }
+  { position: 1, name: "Chaos Royal", creator: "", id: null, verifier: "", difficulty: "Extreme Demon", video: "", status: "Published" },
+  { position: 2, name: "Lightmare Royal", creator: "", id: null, verifier: "", difficulty: "Extreme Demon", video: "", status: "Published" },
+  { position: 3, name: "Nightmare Royal", creator: "", id: null, verifier: "", difficulty: "Extreme Demon", video: "", status: "Published" },
+  { position: 4, name: "Title Wave", creator: "", id: null, verifier: "", difficulty: "Extreme Demon", video: "", status: "Published" },
+  { position: 5, name: "Royal", creator: "", id: null, verifier: "", difficulty: "Extreme Demon", video: "", status: "Published" },
+  { position: 6, name: "i can't see", creator: "", id: null, verifier: "", difficulty: "Extreme Demon", video: "", status: "Published" },
+  { position: 7, name: "error 404", creator: "", id: null, verifier: "", difficulty: "Extreme Demon", video: "", status: "Published" },
+  { position: 8, name: "stereo buffness", creator: "", id: null, verifier: "", difficulty: "Extreme Demon", video: "", status: "Published" },
+  { position: 9, name: "SAB", creator: "", id: null, verifier: "", difficulty: "Extreme Demon", video: "", status: "Published" },
+  { position: 10, name: "Chaos Royal", creator: "", id: null, verifier: "", difficulty: "Extreme Demon", video: "", status: "Published" },
+  { position: 11, name: "Lightmare Royal", creator: "", id: null, verifier: "", difficulty: "Extreme Demon", video: "", status: "Published" },
+  { position: 12, name: "Nightmare Royal", creator: "", id: null, verifier: "", difficulty: "Extreme Demon", video: "", status: "Published" },
+  { position: 13, name: "Title Wave", creator: "", id: null, verifier: "", difficulty: "Extreme Demon", video: "", status: "Published" },
+  { position: 14, name: "Royal", creator: "", id: null, verifier: "", difficulty: "Extreme Demon", video: "", status: "Published" },
+  { position: 15, name: "i can't see", creator: "", id: null, verifier: "", difficulty: "Extreme Demon", video: "", status: "Published" },
+  { position: 16, name: "error 404", creator: "", id: null, verifier: "", difficulty: "Extreme Demon", video: "", status: "Published" },
+  { position: 17, name: "stereo buffness", creator: "", id: null, verifier: "", difficulty: "Extreme Demon", video: "", status: "Published" },
+  { position: 18, name: "SAB", creator: "", id: null, verifier: "", difficulty: "Extreme Demon", video: "", status: "Published" },
+  { position: 19, name: "Fell in the sky", creator: "", id: null, verifier: "", difficulty: "Extreme Demon", video: "", status: "Published" },
+  { position: 20, name: "blue nightmare", creator: "", id: null, verifier: "", difficulty: "Extreme Demon", video: "", status: "Published" },
+  { position: 21, name: "SH1TTY", creator: "", id: null, verifier: "", difficulty: "Extreme Demon", video: "", status: "Published" },
+  { position: 22, name: "Clubstep do Silent", creator: "", id: null, verifier: "", difficulty: "Extreme Demon", video: "", status: "Published" }
 ];
