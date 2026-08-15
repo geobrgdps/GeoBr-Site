@@ -1,3 +1,43 @@
-const list=document.querySelector('#list');const search=document.querySelector('#search');const filter=document.querySelector('#filter');const count=document.querySelector('#count');const empty=document.querySelector('#empty');
-function render(){const q=(search?.value||'').toLowerCase().trim();const d=filter?.value||'all';const items=LEVELS.filter(x=>(d==='all'||x.difficulty===d)&&(!q||`${x.name} ${x.creator} ${x.verifier} ${x.id}`.toLowerCase().includes(q))).sort((a,b)=>(a.position||999)-(b.position||999));count.textContent=LEVELS.length;empty.hidden=items.length>0;list.innerHTML=items.map(x=>`<article class="level"><div class="rank">#${x.position}</div><div><div class="name">${escapeHtml(x.name)}</div><div class="creator">by ${escapeHtml(x.creator)} · ID ${escapeHtml(String(x.id))}</div></div><div class="difficulty">${escapeHtml(x.difficulty)}</div></article>`).join('')}
-function escapeHtml(v){return v.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}search?.addEventListener('input',render);filter?.addEventListener('change',render);render();
+const list = document.querySelector('#list');
+const search = document.querySelector('#search');
+const count = document.querySelector('#count');
+const empty = document.querySelector('#empty');
+
+function escapeHtml(value) {
+  return String(value ?? '').replace(/[&<>"']/g, function (char) {
+    const map = {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'};
+    return map[char];
+  });
+}
+
+function render() {
+  const levels = Array.isArray(window.LEVELS) ? window.LEVELS : [];
+  const query = (search.value || '').trim().toLowerCase();
+  const items = levels
+    .filter(function (level) {
+      if (!query) return true;
+      return [level.name, level.creator, level.verifier, level.id]
+        .join(' ')
+        .toLowerCase()
+        .includes(query);
+    })
+    .sort(function (a, b) {
+      return (Number(a.position) || 999999) - (Number(b.position) || 999999);
+    });
+
+  count.textContent = String(levels.length);
+  empty.hidden = items.length !== 0;
+  list.innerHTML = items.map(function (level) {
+    const creator = level.creator ? 'by ' + escapeHtml(level.creator) : 'Creator not set';
+    const difficulty = level.difficulty || 'Demon';
+    return '<article class="level">' +
+      '<div class="rank">#' + escapeHtml(level.position) + '</div>' +
+      '<div><div class="name">' + escapeHtml(level.name) + '</div>' +
+      '<div class="creator">' + creator + '</div></div>' +
+      '<div class="meta"><span class="difficulty">' + escapeHtml(difficulty) + '</span></div>' +
+      '</article>';
+  }).join('');
+}
+
+search.addEventListener('input', render);
+render();
