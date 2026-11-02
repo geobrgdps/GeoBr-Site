@@ -1,11 +1,49 @@
 <!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Enviar Recorde — GeoBR</title><link rel="stylesheet" href="styles.css?v=13"></head>
-<body><header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><strong>GeoBR</strong><span>Demon List</span></a><a class="admin-back" href="index.html">← Voltar</a></div></header>
-<main class="admin-page"><section class="admin-card"><div class="admin-kicker">GEOBR DEMON LIST</div><h1>Enviar recorde</h1><p>Envie os dados e o vídeo da sua gameplay. O recorde ficará pendente até a análise dos ADMs.</p>
-<form id="record-form"><label>Seu nick<input id="player" maxlength="60" required></label><label>Level<select id="level" required><option value="">Carregando...</option></select></label><label>Progresso (%)<input id="progress" type="number" min="1" max="100" value="100" required></label><label>Observações<textarea id="notes" maxlength="500"></textarea></label><label>Vídeo (máximo 50 MB)<input id="video" type="file" accept="video/*" required></label><button id="send">Enviar recorde</button><p id="result" role="status"></p></form></section></main>
-<script src="levels.js?v=13"></script><script>
-const URL="https://xhmsydvbmrizcbvhdjyq.supabase.co",KEY="sb_publishable_ZZTfBI94AtOC6RsGNuMXYA_FemjbVk9",form=document.querySelector("#record-form"),level=document.querySelector("#level");
-const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-async function init(){let rows=[];try{const r=await fetch(URL+"/rest/v1/levels?select=id,name,position&order=position.asc",{headers:{apikey:KEY,Authorization:"Bearer "+KEY}});if(r.ok)rows=await r.json()}catch(e){}if(!rows.length&&Array.isArray(window.LEVELS))rows=window.LEVELS;level.innerHTML='<option value="">Selecione o level</option>'+rows.map(x=>'<option value="'+esc(x.name)+'">'+esc(x.name)+'</option>').join("")}
-form.onsubmit=async e=>{e.preventDefault();const f=document.querySelector("#video").files[0],btn=document.querySelector("#send"),msg=document.querySelector("#result");if(!f||f.size>52428800){msg.textContent="Escolha um vídeo de até 50 MB.";return}btn.disabled=true;msg.textContent="Enviando vídeo...";try{const ext=(f.name.split(".").pop()||"mp4").replace(/[^a-z0-9]/gi,"").toLowerCase(),path="pending/"+crypto.randomUUID()+"."+ext;let r=await fetch(URL+"/storage/v1/object/record-videos/"+path,{method:"POST",headers:{apikey:KEY,"Content-Type":f.type||"video/mp4"},body:f});if(!r.ok)throw Error("Falha no upload do vídeo: "+r.status);const nick=document.querySelector("#player").value.trim();r=await fetch(URL+"/rest/v1/submissions",{method:"POST",headers:{apikey:KEY,"Content-Type":"application/json",Prefer:"return=minimal"},body:JSON.stringify({player_name:nick,submitter:nick,level_name:level.value,progress:Number(document.querySelector("#progress").value),notes:document.querySelector("#notes").value.trim(),video_path:path,status:"Pending"})});if(!r.ok)throw Error("Falha ao registrar o recorde: "+r.status);form.reset();msg.textContent="Recorde enviado! Aguarde a análise dos ADMs."}catch(err){msg.textContent=err.message}finally{btn.disabled=false}};init();
-</script></body></html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Enviar Recorde — GeoBR</title><link rel="stylesheet" href="styles.css?v=15">
+</head>
+<body>
+<header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><strong>GeoBR</strong><span>Demon List</span></a><a class="admin-back" href="index.html">← Voltar</a></div></header>
+<main class="admin-page submit-page">
+<section class="admin-card submit-card">
+<div class="admin-kicker">GEOBR DEMON LIST</div><h1>Enviar recorde</h1>
+<p>Preencha os dados do seu recorde. A equipe da GeoBR vai analisar o vídeo antes de aprovar.</p>
+<form id="record-form" class="record-form">
+<label for="player">Seu nick</label><input id="player" maxlength="60" placeholder="Digite seu nick no Geometry Dash" required>
+<label for="level">Nome do Level</label><input id="level" maxlength="100" placeholder="Digite o nome exato do level" required>
+<label for="progress">Progresso (%)</label><input id="progress" type="number" min="1" max="100" value="100" required>
+<label for="notes">Observações <span>(opcional)</span></label><textarea id="notes" maxlength="500" rows="4" placeholder="Informações adicionais para os moderadores"></textarea>
+<label for="video">Vídeo da gameplay</label><input id="video" type="file" accept="video/mp4,video/webm,video/quicktime,video/x-matroska" required>
+<small class="file-help">MP4, WebM, MOV ou MKV · máximo de 50 MB.</small>
+<div class="upload-progress" id="upload-progress" hidden><div class="upload-progress-bar" id="upload-bar"></div></div>
+<p id="result" class="submit-result" role="status" aria-live="polite"></p>
+<button id="send" type="submit">Enviar recorde</button>
+</form>
+</section></main>
+<script>
+const URL="https://xhmsydvbmrizcbvhdjyq.supabase.co",KEY="sb_publishable_ZZTfBI94AtOC6RsGNuMXYA_FemjbVk9";
+const form=document.querySelector("#record-form"),btn=document.querySelector("#send"),msg=document.querySelector("#result"),progressWrap=document.querySelector("#upload-progress"),progressBar=document.querySelector("#upload-bar");
+const MAX=50*1024*1024;
+function setMessage(text,type="info"){msg.textContent=text;msg.className="submit-result "+type}
+function requestHeaders(extra={}){return {apikey:KEY,Authorization:"Bearer "+KEY,...extra}}
+function uploadFile(file,path){return new Promise((resolve,reject)=>{const xhr=new XMLHttpRequest();xhr.open("POST",URL+"/storage/v1/object/record-videos/"+path);xhr.setRequestHeader("apikey",KEY);xhr.setRequestHeader("Authorization","Bearer "+KEY);xhr.setRequestHeader("Content-Type",file.type||"application/octet-stream");xhr.upload.onprogress=e=>{if(e.lengthComputable){const pct=Math.round(e.loaded/e.total*100);progressBar.style.width=pct+"%";setMessage("Enviando vídeo… "+pct+"%")}};xhr.onload=()=>xhr.status>=200&&xhr.status<300?resolve():reject(new Error("O upload falhou ("+xhr.status+"). Confira o formato do vídeo e tente novamente."));xhr.onerror=()=>reject(new Error("Falha de conexão durante o upload."));xhr.onabort=()=>reject(new Error("Upload cancelado."));xhr.send(file)})}
+form.addEventListener("submit",async e=>{e.preventDefault();if(!form.reportValidity())return;
+const nick=document.querySelector("#player").value.trim(),level=document.querySelector("#level").value.trim(),pct=Number(document.querySelector("#progress").value),notes=document.querySelector("#notes").value.trim(),file=document.querySelector("#video").files[0];
+if(!nick||!level){setMessage("Preencha seu nick e o nome do level.","error");return}
+if(!file||file.size===0||file.size>MAX){setMessage("Escolha um vídeo válido de até 50 MB.","error");return}
+if(!/^video\//i.test(file.type)){setMessage("O arquivo selecionado não parece ser um vídeo compatível.","error");return}
+btn.disabled=true;btn.textContent="Enviando…";progressWrap.hidden=false;progressBar.style.width="0%";
+const ext=(file.name.split(".").pop()||"mp4").toLowerCase().replace(/[^a-z0-9]/g,"")||"mp4",path="pending/"+crypto.randomUUID()+"."+ext;
+try{
+setMessage("Preparando envio…");await uploadFile(file,path);
+setMessage("Vídeo enviado. Registrando recorde…");
+const response=await fetch(URL+"/rest/v1/submissions",{method:"POST",headers:requestHeaders({"Content-Type":"application/json",Prefer:"return=minimal"}),body:JSON.stringify({player_name:nick,submitter:nick,level_name:level,progress:pct,notes,video_path:path,status:"Pending"})});
+if(!response.ok){let detail="";try{detail=(await response.json()).message||""}catch{}throw new Error("O vídeo subiu, mas o registro não foi salvo ("+response.status+"). "+detail)}
+form.reset();progressBar.style.width="100%";setMessage("Recorde enviado com sucesso! Aguarde a análise da equipe.","success");
+}catch(err){setMessage(err.message||"Não foi possível enviar o recorde. Tente novamente.","error")}
+finally{btn.disabled=false;btn.textContent="Enviar recorde"}
+});
+</script>
+</body></html>
